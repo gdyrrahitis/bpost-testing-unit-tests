@@ -39,6 +39,11 @@ namespace Ordering.Domain.Aggregates
 
         public void RemoveQuantity(int quantity)
         {
+            if (quantity <= 0)
+            {
+                throw new ArgumentException("Invalid quantity");
+            }
+
             if (quantity >= Quantity)
             {
                 throw new ArgumentException("Invalid quantity");
@@ -47,6 +52,6 @@ namespace Ordering.Domain.Aggregates
             Quantity -= quantity;
         }
 
-        public decimal CalculateVat() => Price * Vat;
+        public decimal CalculateVat() => (Price * Quantity) * Vat;
     }
 }
